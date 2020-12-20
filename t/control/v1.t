@@ -14,30 +14,42 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+use t::APISIX 'no_plan';
 
-apiVersion: v1
-kind: Service
-metadata:
-  name: apisix-gw-lb
-  # namespace: default
-  labels:
-    app: apisix-gw   # useful for service discovery, for example, prometheus-operator.
-spec:
-  ports:
-    - name: http
-      port: 9080
-      protocol: TCP
-      targetPort: 9080
-    - name: https
-      port: 9443
-      protocol: TCP
-      targetPort: 9443
-      # - name: admin-port
-      #   port: 9180
-      #   protocol: TCP
-      #   targetPort: 9180
-      selector:
-        app: apisix-gw
-      type: NodePort
-      externalTrafficPolicy: Local
-      # sessionAffinity: None
+repeat_each(1);
+no_long_string();
+no_root_location();
+no_shuffle();
+log_level("info");
+
+add_block_preprocessor(sub {
+    my ($block) = @_;
+
+    if (!$block->request) {
+        $block->set_value("request", "GET /t");
+    }
+
+    if (!$block->no_error_log) {
+        $block->set_value("no_error_log", "[error]\n[alert]");
+    }
+});
+
+run_tests;
+
+__DATA__
+
+=== TEST 1: sanity
+--- request
+GET /v1/plugin/example-plugin/hello
+--- response_body
+world
+
+
+
+=== TEST 2: set Content-Type for table response
+--- request
+GET /v1/plugin/example-plugin/hello?json
+--- response_body
+{"msg":"world"}
+--- response_headers
+Content-Type: application/json

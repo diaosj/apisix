@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 #
 # Licensed to the Apache Software Foundation (ASF) under one or more
 # contributor license agreements.  See the NOTICE file distributed with
@@ -15,29 +17,25 @@
 # limitations under the License.
 #
 
-apiVersion: v1
-kind: Service
-metadata:
-  name: apisix-gw-lb
-  # namespace: default
-  labels:
-    app: apisix-gw   # useful for service discovery, for example, prometheus-operator.
-spec:
-  ports:
-    - name: http
-      port: 9080
-      protocol: TCP
-      targetPort: 9080
-    - name: https
-      port: 9443
-      protocol: TCP
-      targetPort: 9443
-      # - name: admin-port
-      #   port: 9180
-      #   protocol: TCP
-      #   targetPort: 9180
-      selector:
-        app: apisix-gw
-      type: NodePort
-      externalTrafficPolicy: Local
-      # sessionAffinity: None
+# This file is like other test_*.sh, but requires extra dependencies which
+# you don't need in daily development.
+
+. ./.travis/apisix_cli_test/common.sh
+
+# check error handling when connecting to old etcd
+git checkout conf/config.yaml
+
+echo '
+etcd:
+  host:
+    - "http://127.0.0.1:3379"
+  prefix: "/apisix"
+' > conf/config.yaml
+
+out=$(make init 2>&1 || true)
+if ! echo "$out" | grep 'etcd cluster version 3.3.0 is less than the required version 3.4.0'; then
+    echo "failed: properly handle the error when connecting to old etcd"
+    exit 1
+fi
+
+echo "passed: properly handle the error when connecting to old etcd"
