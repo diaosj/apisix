@@ -19,7 +19,7 @@
 
 # Apache APISIX
 
-[![Build Status](https://travis-ci.org/apache/apisix.svg?branch=master)](https://travis-ci.org/apache/apisix)
+[![Build Status](https://github.com/apache/apisix/workflows/build/badge.svg?branch=master)](https://github.com/apache/apisix/actions)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/apache/apisix/blob/master/LICENSE)
 
 <p align="center">
@@ -97,6 +97,7 @@ A/B 测试、金丝雀发布(灰度发布)、蓝绿部署、限流限速、抵�
   - [健康检查](doc/zh-cn/health-check.md)：启用上游节点的健康检查，将在负载均衡期间自动过滤不健康的节点，以确保系统稳定性。
   - 熔断器: 智能跟踪不健康上游服务。
   - [代理镜像](doc/zh-cn/plugins/proxy-mirror.md): 提供镜像客户端请求的能力。
+  - [流量拆分](doc/zh-cn/plugins/traffic-split.md): 允许用户逐步控制各个上游之间的流量百分比。
 
 - **精细化路由**
 

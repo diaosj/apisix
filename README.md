@@ -19,7 +19,7 @@
 
 # Apache APISIX
 
-[![Build Status](https://travis-ci.org/apache/apisix.svg?branch=master)](https://travis-ci.org/apache/apisix)
+[![Build Status](https://github.com/apache/apisix/workflows/build/badge.svg?branch=master)](https://github.com/apache/apisix/actions)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/apache/apisix/blob/master/LICENSE)
 
 <p align="center">
@@ -99,6 +99,7 @@ A/B testing, canary release, blue-green deployment, limit rate, defense against 
   - [Health Checks](doc/health-check.md): Enable health check on the upstream node, and will automatically filter unhealthy nodes during load balancing to ensure system stability.
   - Circuit-Breaker: Intelligent tracking of unhealthy upstream services.
   - [Proxy Mirror](doc/plugins/proxy-mirror.md): Provides the ability to mirror client requests.
+  - [Traffic Split](doc/plugins/traffic-split.md): Allows users to incrementally direct percentages of traffic between various upstreams.
 
 - **Fine-grained routing**
 
