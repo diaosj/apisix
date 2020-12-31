@@ -730,6 +730,9 @@ end
 
 function _M.http_log_phase()
     local api_ctx = common_phase("log")
+    if not api_ctx then
+        return
+    end
     healcheck_passive(api_ctx)
 
     if api_ctx.server_picker and api_ctx.server_picker.after_balance then
