@@ -66,6 +66,9 @@ return function (apisix_home, pkg_cpath_org, pkg_path_org)
         end
     end
 
+    if not apisix_home then
+        error("failed to fetch current path")
+    end
     local openresty_args = [[openresty -p ]] .. apisix_home .. [[ -c ]]
                            .. apisix_home .. [[/conf/nginx.conf]]
 
