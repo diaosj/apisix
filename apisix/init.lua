@@ -151,6 +151,10 @@ local function run_plugin(phase, plugins, api_ctx)
             if phase_func then
                 local code, body = phase_func(plugins[i + 1], api_ctx)
                 if code or body then
+                    if code >= 400 then
+                        core.log.warn(plugins[i].name, " exits with http status code ", code)
+                    end
+
                     core.response.exit(code, body)
                 end
             end
@@ -183,13 +187,8 @@ function _M.http_ssl_phase()
         if err then
             core.log.error("failed to fetch ssl config: ", err)
         end
-        -- clear the ctx of the ssl phase, avoid affecting other phases
-        ngx.ctx = nil
         ngx_exit(-1)
     end
-
-    -- clear the ctx of the ssl phase, avoid affecting other phases
-    ngx.ctx = nil
 end
 
 

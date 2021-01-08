@@ -34,22 +34,22 @@ You can install Apache APISIX in a variety of ways, including source code packag
 You need to download the Apache source release first:
 
 ```shell
-$ mkdir apisix-2.1
-$ wget https://downloads.apache.org/apisix/2.1/apache-apisix-2.1-src.tgz
-$ tar zxvf apache-apisix-2.1-src.tgz -C apisix-2.1
+$ mkdir apisix-2.2
+$ wget https://downloads.apache.org/apisix/2.2/apache-apisix-2.2-src.tgz
+$ tar zxvf apache-apisix-2.2-src.tgz -C apisix-2.2
 ```
 
 Install the Lua libraries that the runtime depends on:
 
 ```shell
-cd apache-apisix-2.1
+cd apache-apisix-2.2
 make deps
 ```
 
 ### Installation via RPM package (CentOS 7)
 
 ```shell
-sudo yum install -y https://github.com/apache/apisix/releases/download/2.1/apisix-2.1-0.el7.noarch.rpm
+sudo yum install -y https://github.com/apache/apisix/releases/download/2.2/apisix-2.2-0.el7.noarch.rpm
 ```
 
 ### Installation via Luarocks (macOS not supported)
@@ -65,11 +65,11 @@ sudo sh -c "$(curl -fsSL https://raw.githubusercontent.com/apache/apisix/master/
 > Install the specified version via Luarocks:
 
 ```shell
-# Install version 2.1
-sudo luarocks install --lua-dir=/path/openresty/luajit apisix 2.1
+# Install version 2.2
+sudo luarocks install --lua-dir=/path/openresty/luajit apisix 2.2
 
 # old luarocks not support the `lua-dir` parameter, you can remove this option
-sudo luarocks install apisix 2.1
+sudo luarocks install apisix 2.2
 ```
 
 ## 3. Manage (start/stop) APISIX Server
@@ -122,8 +122,10 @@ see how to do it.
 ### Troubleshoot Testing
 
 **Set Nginx Path**
+
 - If you run in to an issue `Error unknown directive "lua_package_path" in /API_ASPIX/apisix/t/servroot/conf/nginx.conf`
 make sure to set openresty as default nginx. And export the path as below.
+
 * export PATH=/usr/local/openresty/nginx/sbin:$PATH
     - Linux default installation path:
         * export PATH=/usr/local/openresty/nginx/sbin:$PATH
@@ -131,6 +133,7 @@ make sure to set openresty as default nginx. And export the path as below.
         * export PATH=/usr/local/opt/openresty/nginx/sbin:$PATH
 
 **Run Individual Test Cases**
+
 - Use the following command to run test cases constrained to a file:
     - prove -Itest-nginx/lib -r t/plugin/openid-connect.t
 
